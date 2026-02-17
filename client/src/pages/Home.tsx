@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Code2, Zap, Users, Github, Linkedin, Twitter } from "lucide-react";
 import { useState } from "react";
+import ContactForm from "@/components/ContactForm";
 
 /**
  * Design System: Modern Minimalist with Kinetic Energy
@@ -300,19 +301,11 @@ export default function Home() {
             <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -z-10" />
 
             <h2 className="text-4xl font-bold mb-6">Ready to Join the Revolution?</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
               Get in touch with our team to learn how Pioneers can help transform your business with cutting-edge technology solutions.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-accent text-primary-foreground hover:bg-accent/90 h-12 px-8 text-base font-semibold">
-                Start Your Journey
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button variant="outline" className="border-accent text-accent hover:bg-accent/10 h-12 px-8 text-base font-semibold">
-                Schedule a Demo
-              </Button>
-            </div>
+            <ContactForm />
           </div>
         </div>
       </section>
