@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public",
+  "framework": "vite",
+  "env": {
+    "VITE_APP_TITLE": "@pioneers-website/VITE_APP_TITLE",
+    "VITE_APP_LOGO": "@pioneers-website/VITE_APP_LOGO"
+  }
+}
