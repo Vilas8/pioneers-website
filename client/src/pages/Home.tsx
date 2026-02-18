@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Code2, Zap, Users, Github, Linkedin, Twitter } from "lucide-react";
 import { useState } from "react";
+import { useLocation } from "wouter";
 import ContactForm from "@/components/ContactForm";
+import { products } from "@/const/products";
+import { formatINR } from "@/lib/currency";
 
 /**
  * Design System: Modern Minimalist with Kinetic Energy
@@ -13,29 +16,57 @@ import ContactForm from "@/components/ContactForm";
 
 export default function Home() {
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
+  const [, setLocation] = useLocation();
+
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case "Zap":
+        return <Zap className="w-6 h-6" />;
+      case "Code2":
+        return <Code2 className="w-6 h-6" />;
+      case "Users":
+        return <Users className="w-6 h-6" />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container flex items-center justify-between h-16">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setLocation("/")}>
             <div className="w-8 h-8 bg-accent rounded-sm flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">P</span>
             </div>
             <span className="font-bold text-lg tracking-wider">PIONEERS</span>
           </div>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#about" className="text-sm hover:text-accent transition-colors">
+            <button
+              onClick={() => setLocation("/about")}
+              className="text-sm hover:text-accent transition-colors"
+            >
               About
-            </a>
+            </button>
+            <button
+              onClick={() => setLocation("/pricing")}
+              className="text-sm hover:text-accent transition-colors"
+            >
+              Pricing
+            </button>
             <a href="#products" className="text-sm hover:text-accent transition-colors">
               Products
             </a>
             <a href="#team" className="text-sm hover:text-accent transition-colors">
               Team
             </a>
-            <Button variant="outline" size="sm" className="border-accent text-accent hover:bg-accent hover:text-primary-foreground">
+            <Button
+              onClick={() => setLocation("/pricing")}
+              variant="outline"
+              size="sm"
+              className="border-accent text-accent hover:bg-accent hover:text-primary-foreground"
+            >
               Get Started
             </Button>
           </div>
@@ -72,11 +103,18 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-accent text-primary-foreground hover:bg-accent/90 h-12 px-8 text-base font-semibold">
+              <Button
+                onClick={() => setLocation("/pricing")}
+                className="bg-accent text-primary-foreground hover:bg-accent/90 h-12 px-8 text-base font-semibold"
+              >
                 Explore Our Work
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <Button variant="outline" className="border-accent text-accent hover:bg-accent/10 h-12 px-8 text-base font-semibold">
+              <Button
+                onClick={() => setLocation("/about")}
+                variant="outline"
+                className="border-accent text-accent hover:bg-accent/10 h-12 px-8 text-base font-semibold"
+              >
                 Learn More
               </Button>
             </div>
@@ -128,10 +166,19 @@ export default function Home() {
                   <p className="text-sm text-muted-foreground">Active Projects</p>
                 </div>
                 <div className="space-y-2">
-                  <div className="text-3xl font-bold text-accent">$50M</div>
+                  <div className="text-3xl font-bold text-accent">₹50Cr</div>
                   <p className="text-sm text-muted-foreground">Funding Raised</p>
                 </div>
               </div>
+
+              <Button
+                onClick={() => setLocation("/about")}
+                variant="outline"
+                className="border-accent text-accent hover:bg-accent/10 mt-4"
+              >
+                Learn Our Story
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
             </div>
 
             {/* Right visual */}
@@ -172,59 +219,57 @@ export default function Home() {
 
           {/* Products Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                name: "CloudSync",
-                description: "Real-time data synchronization across distributed systems with zero downtime.",
-                icon: Zap,
-                color: "from-accent to-accent/50",
-              },
-              {
-                name: "DevFlow",
-                description: "Streamlined development pipeline that reduces deployment time by 80%.",
-                icon: Code2,
-                color: "from-accent/70 to-accent/30",
-              },
-              {
-                name: "TeamHub",
-                description: "Unified collaboration platform for remote and distributed teams.",
-                icon: Users,
-                color: "from-accent/50 to-accent/10",
-              },
-            ].map((product, idx) => {
-              const Icon = product.icon;
-              return (
+            {products.map((product, idx) => (
+              <div
+                key={idx}
+                onClick={() => setLocation(`/product/${product.slug}`)}
+                className="group relative p-6 rounded-lg border border-border bg-card/50 hover:bg-card/80 transition-all duration-300 cursor-pointer overflow-hidden"
+                onMouseEnter={() => setHoveredProduct(idx)}
+                onMouseLeave={() => setHoveredProduct(null)}
+              >
+                {/* Hover gradient background */}
                 <div
-                  key={idx}
-                  className="group relative p-6 rounded-lg border border-border bg-card/50 hover:bg-card/80 transition-all duration-300 cursor-pointer overflow-hidden"
-                  onMouseEnter={() => setHoveredProduct(idx)}
-                  onMouseLeave={() => setHoveredProduct(null)}
-                >
-                  {/* Hover gradient background */}
-                  <div
-                    className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-gradient-to-br ${product.color}`}
-                  />
+                  className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-gradient-to-br ${product.color}`}
+                />
 
-                  {/* Content */}
-                  <div className="relative z-10 space-y-4">
-                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${product.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="w-6 h-6 text-primary-foreground" />
-                    </div>
+                {/* Content */}
+                <div className="relative z-10 space-y-4">
+                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${product.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 text-primary-foreground`}>
+                    {getIcon(product.icon)}
+                  </div>
 
-                    <h3 className="text-xl font-bold">{product.name}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{product.description}</p>
+                  <h3 className="text-xl font-bold">{product.name}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{product.shortDescription}</p>
 
-                    <div className="flex items-center gap-2 text-accent text-sm font-semibold group-hover:gap-3 transition-all duration-300">
-                      Learn more
-                      <ArrowRight className="w-4 h-4" />
+                  <div className="pt-4 space-y-3">
+                    <div className="text-sm">
+                      <span className="text-accent font-bold">Starting at</span>
+                      <div className="text-lg font-bold text-accent">
+                        {formatINR(Math.min(...Object.values(product.pricing)))}
+                      </div>
                     </div>
                   </div>
 
-                  {/* Border animation */}
-                  <div className="absolute inset-0 border border-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+                  <div className="flex items-center gap-2 text-accent text-sm font-semibold group-hover:gap-3 transition-all duration-300">
+                    View Details
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
                 </div>
-              );
-            })}
+
+                {/* Border animation */}
+                <div className="absolute inset-0 border border-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Button
+              onClick={() => setLocation("/pricing")}
+              className="bg-accent text-primary-foreground hover:bg-accent/90 h-12 px-8 text-base font-semibold"
+            >
+              View All Plans
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
           </div>
         </div>
       </section>
@@ -327,18 +372,37 @@ export default function Home() {
             <div className="space-y-4">
               <h4 className="font-bold">Product</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-accent transition-colors">CloudSync</a></li>
-                <li><a href="#" className="hover:text-accent transition-colors">DevFlow</a></li>
-                <li><a href="#" className="hover:text-accent transition-colors">TeamHub</a></li>
+                {products.map((product) => (
+                  <li key={product.id}>
+                    <button
+                      onClick={() => setLocation(`/product/${product.slug}`)}
+                      className="hover:text-accent transition-colors"
+                    >
+                      {product.name}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div className="space-y-4">
               <h4 className="font-bold">Company</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#about" className="hover:text-accent transition-colors">About</a></li>
-                <li><a href="#team" className="hover:text-accent transition-colors">Team</a></li>
-                <li><a href="#" className="hover:text-accent transition-colors">Blog</a></li>
+                <li>
+                  <button onClick={() => setLocation("/about")} className="hover:text-accent transition-colors">
+                    About
+                  </button>
+                </li>
+                <li>
+                  <a href="#team" className="hover:text-accent transition-colors">
+                    Team
+                  </a>
+                </li>
+                <li>
+                  <button onClick={() => setLocation("/pricing")} className="hover:text-accent transition-colors">
+                    Pricing
+                  </button>
+                </li>
               </ul>
             </div>
 
@@ -361,9 +425,15 @@ export default function Home() {
           <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
             <p>&copy; 2024 Pioneers. All rights reserved.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-accent transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-accent transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-accent transition-colors">Contact</a>
+              <a href="#" className="hover:text-accent transition-colors">
+                Privacy Policy
+              </a>
+              <a href="#" className="hover:text-accent transition-colors">
+                Terms of Service
+              </a>
+              <a href="#" className="hover:text-accent transition-colors">
+                Contact
+              </a>
             </div>
           </div>
         </div>

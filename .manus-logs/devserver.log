@@ -1,0 +1,28 @@
+[2026-02-17T07:07:35.680Z] Starting dev server with command: pnpm run dev
+[2026-02-17T07:07:36.619Z] 
+[2026-02-17T07:07:36.619Z] > pioneers-website@1.0.0 dev /home/ubuntu/pioneers-website
+[2026-02-17T07:07:36.619Z] > vite --host
+[2026-02-17T07:07:36.619Z] 
+[2026-02-17T07:07:37.332Z] 
+[2026-02-17T07:07:37.332Z] VITE v7.1.9  ready in 677 ms
+[2026-02-17T07:07:37.332Z] 
+[2026-02-17T07:07:37.332Z] ➜  Local:   http://localhost:3000/
+[2026-02-17T07:07:37.334Z] ➜  Network: http://169.254.0.21:3000/
+[2026-02-17T07:09:19.716Z] 2:09:19 AM [vite] (client) page reload index.html
+[2026-02-17T07:13:47.912Z] [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[2026-02-17T07:24:56.298Z] 2:24:56 AM [vite] (client) hmr update /src/pages/Home.tsx, /src/index.css
+[2026-02-17T07:24:58.738Z] 2:24:58 AM [vite] (client) ✨ new dependencies optimized: @radix-ui/react-select, @radix-ui/react-dialog
+[2026-02-17T07:24:58.738Z] 2:24:58 AM [vite] (client) ✨ optimized dependencies changed. reloading
+[2026-02-17T07:33:18.175Z] 2:33:18 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
+[2026-02-17T07:34:40.803Z] 2:34:40 AM [vite] (client) hmr update /src/pages/Home.tsx, /src/index.css
+[2026-02-18T02:48:39.644Z] Dev server process group stopped
+[2026-02-18T02:48:42.653Z] Starting dev server with command: pnpm run dev
+[2026-02-18T02:48:43.485Z] 
+[2026-02-18T02:48:43.486Z] > pioneers-website@1.0.0 dev /home/ubuntu/pioneers-website
+[2026-02-18T02:48:43.486Z] > vite --host
+[2026-02-18T02:48:43.486Z] 
+[2026-02-18T02:48:43.952Z] 
+[2026-02-18T02:48:43.953Z] VITE v7.1.9  ready in 424 ms
+[2026-02-18T02:48:43.953Z] 
+[2026-02-18T02:48:43.953Z] ➜  Local:   http://localhost:3000/
+[2026-02-18T02:48:43.954Z] ➜  Network: http://169.254.0.21:3000/
